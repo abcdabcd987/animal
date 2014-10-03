@@ -10,7 +10,7 @@ using network::IO;
 
 #define SERVER_PORT "1234"
 
-vector<pair<int, pair<pair<int ,int>, char> > > step;
+vector<pair<int, pair<pair<int ,int>, pair<int, int> > > > step;
 int my_id;
 
 Player *player;
@@ -33,8 +33,7 @@ int main(int argc,char **argv)
 	}
 	IO client(argv[1],SERVER_PORT);
 	string message;
-	int x_space,y_space,id;
-	char toward;
+	int x_space,y_space,id,x,y;
 	
 	client.receive(message);
 	my_id=message[0]-'0';
@@ -60,8 +59,9 @@ int main(int argc,char **argv)
 				id=message[0]-'0';
 				x_space=message[2]-'0';
 				y_space=message[4]-'0';
-				toward=message[6];
-				step.push_back(make_pair(id,make_pair(make_pair(x_space,y_space),toward)));
+				x=message[6]-'0';
+				y=message[8]-'0';
+				step.push_back(make_pair(id,make_pair(make_pair(x_space,y_space),make_pair(x,y))));
 			}
 		}
 	}

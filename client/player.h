@@ -9,14 +9,14 @@ using namespace std;
 
 /**
 *@para my_id 0 present that your are the first player, while 1 present that your are the second player.
-*@para operators all operators that 2 players had done. each element is in the format of <id,< <x,y> ,direction> >
+*@para operators all operators that 2 players had done. each element is in the format of <id, < <x,y> ,<move to x, move to y> > >
 **/
 class Player{
 private:
 	int my_id;
-	const vector<pair<int, pair<pair<int ,int>, char> > >  *operators;
+	const vector<pair<int, pair<pair<int ,int>, pair<int, int> > > >  *operators;
 public:
-	Player(int _my_id,vector<pair<int, pair<pair<int ,int>, char> > >  *_operators):my_id(_my_id),operators(_operators){}
+	Player(int _my_id,vector<pair<int, pair<pair<int ,int>, pair<int, int> > > >  *_operators):my_id(_my_id),operators(_operators){}
 	~Player(){}
 
 	/**
