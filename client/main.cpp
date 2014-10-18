@@ -8,15 +8,15 @@
 using namespace std;
 using network::IO;
 
-#define SERVER_PORT "1234"
+#define SERVER_PORT "12345"
 
-vector<pair<int, pair<pair<int ,int>, pair<int, int> > > > step;
+vector<pair<int, pair<pair<int ,int>, pair<int, int > > > > step;
 int my_id;
 
 Player *player;
 
 void makeDecision(string& decision){
-	pair<pair<int, int> char> res=player->makeDecision();
+	pair<pair<int, int>, char> res=player->makeDecision();
 	decision=to_string(res.first.first);
 	decision+=' ';
 	decision+=to_string(res.first.second);
@@ -27,18 +27,18 @@ void makeDecision(string& decision){
 
 int main(int argc,char **argv)
 {
-	if(argc!=1){
+	if(argc!=2){
 		cerr<<"<usage>: client ip"<<endl;
 		return 1;
 	}
 	IO client(argv[1],SERVER_PORT);
 	string message;
-	int x_space,y_space,id,x,y;
+	int x_space,y_space,id,new_x,new_y;
 	
 	client.receive(message);
 	my_id=message[0]-'0';
 	player=new Player(my_id,&step);
-	client.send(player.name()+'\n');
+	client.send(string(player->name()+'\n'));
 	while(true){
 		client.receive(message);
 		if(message=="game end\n"){
@@ -59,9 +59,9 @@ int main(int argc,char **argv)
 				id=message[0]-'0';
 				x_space=message[2]-'0';
 				y_space=message[4]-'0';
-				x=message[6]-'0';
-				y=message[8]-'0';
-				step.push_back(make_pair(id,make_pair(make_pair(x_space,y_space),make_pair(x,y))));
+				new_x=message[6]-'0';
+				new_y=message[8]-'0';
+				step.push_back(make_pair(id,make_pair(make_pair(x_space,y_space),make_pair(new_x,new_y))));
 			}
 		}
 	}

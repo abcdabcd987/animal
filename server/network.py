@@ -15,7 +15,7 @@ class server:
     '''
     def __init__(self,log):
         host=socket.gethostname()
-        port=1234
+        port=12345
         self.log=log
         self.spy=socket.socket()
         self.spy.bind((host,port))
