@@ -1,5 +1,5 @@
-## PPCA 2014 Final project
-## Makefile of the Texas Hold'em Client
+## Programming 2014 Final project
+## Mingw Makefile of the Animal
 ## You might want to add -O2 to CFLAGS after debug.
 ## Change BOOST_PATH to the location where boost is located
 
@@ -10,7 +10,7 @@ TARGET = client.exe
 LIBS = -lws2_32 -lmswsock -l:libboost_system-mgw48-mt-1_55.a
 CXX = g++
 #CFLAGS = -std=c++11 -Wall -Wextra -g -D_WIN32_WINNT=0x0601 -I${BOOST_PATH}		## use this for debug
-CFLAGS = -std=c++11 -O2 -DNDEBUG -D_WIN32_WINNT=0x0601 -L${BOOST_PATH}
+CFLAGS = -std=c++11 -O2 -DNDEBUG -D_WIN32_WINNT=0x0601 -I${BOOST_PATH}
 LIB_PATH = -L${BOOST_PATH}\stage\lib
 
 HEADERS = network.h player.h 

@@ -25,7 +25,7 @@ while True:
     message=server.recieve(server.AI[now_player])
     log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
     if not message=="None":        
-        message=chess.transMessage(now_player,message)
+        message=chess.chess.transMessage(now_player,message)
         log.logging("transform message form [number: %d] [name: %s]: %s"%(now_player,server.AIname[now_player],message))
         feedback=board.check(now_player,message)
         if feedback!=False:
