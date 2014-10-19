@@ -10,6 +10,9 @@ using network::IO;
 
 #define SERVER_PORT "12345"
 
+#define DEBUG_SINGAL 1
+#define DEBUG(x) if(DEBUG_SINGAL)cout<<#x<<" : "<<x<<endl;
+
 vector<pair<int, pair<pair<int ,int>, pair<int, int > > > > step;
 int my_id;
 
@@ -41,13 +44,15 @@ int main(int argc,char **argv)
 	client.send(string(player->name()+'\n'));
 	while(true){
 		client.receive(message);
+		DEBUG(message);
 		if(message=="game end\n"){
 			break;
 		}else{
 			if(message=="action\n"){
 				string decision="";
-				thread(makeDecision,std::ref(decision));
-				this_thread::sleep_for(std::chrono::seconds(1));
+				makeDecision(decision);
+				//this_thread::sleep_for(std::chrono::seconds(1));
+				DEBUG(decision);
 				if(decision==""){
 					client.send("None\n");
 				}else{
