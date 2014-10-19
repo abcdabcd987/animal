@@ -117,7 +117,7 @@ class chess:
                     return (x,y+1)
             
     def __isAnimal__(self,a,b):
-        return isinstance(self.map[a][b]) and self.map[a][b][0]>=0
+        return isinstance(self.map[a][b],tuple) and self.map[a][b][0]>=0
         
     def __eat__(self,animal,x,y,a,b):
         if (a,b) in ((0,3) or (8,3)):
@@ -194,19 +194,19 @@ class chess:
             self.log.logging("unknown error")
             return False
         
-    def transMessage(player,message):
-        if player==0:
-            return message
+def transMessage(player,message):
+    if player==0:
+        return message
+    else:
+        info=message.split()
+        info[0]=str(8-int(info[0]))
+        info[1]=str(6-int(info[1]))
+        if info[2]=='U':
+            info[2]='D'
+        elif info[2]=='D':
+            info[2]='U'
+        elif info[2]=='L':
+            info[2]='R'
         else:
-            info=message.split()
-            info[0]=str(8-int(info[0]))
-            info[1]=str(6-int(info[1]))
-            if info[2]=='U':
-                info[2]='D'
-            elif info[2]=='D':
-                info[2]='U'
-            elif info[2]=='L':
-                info[2]='R'
-            else:
-                info[2]='L'
-            return ' '.join(info)
+            info[2]='L'
+        return ' '.join(info)

@@ -28,7 +28,7 @@ public:
 	*make a decision which animal goes.
 	*@return the Animal which is localed at pair<int, int> would goes. The char is one of U(up),D(down),L(left),R(right).
 	**/
-	pair<pair<int, int> char> makeDecision();
+	pair<pair<int, int>, char> makeDecision();
 };
 
 #endif
