@@ -45,10 +45,10 @@ int main(int argc,char **argv)
 	while(true){
 		client.receive(message);
 		DEBUG(message);
-		if(message=="game end\n"){
+		if(message=="game end"){
 			break;
 		}else{
-			if(message=="action\n"){
+			if(message=="action"){
 				string decision="";
 				makeDecision(decision);
 				//this_thread::sleep_for(std::chrono::seconds(1));
@@ -59,7 +59,7 @@ int main(int argc,char **argv)
 					client.send(decision);
 				}
 			}else{
-				if(message=="None\n")
+				if(message=="None")
 					continue;
 				id=message[0]-'0';
 				x_space=message[2]-'0';
