@@ -158,9 +158,9 @@ class chess:
         elif (x,y)==(8,3):
             return (-4,1)
         elif x>=3 and x<=5 and y!=0 and y!=3 and y!=6:
-            return -1
-        else:
             return -2
+        else:
+            return -1
     
     def check(self,player,message):
         try:
@@ -175,11 +175,12 @@ class chess:
                     if self.__isBoundary__(nextx,nexty):
                         if self.__eat__(animal_type,x,y,nextx,nexty):
                             self.map[nextx][nexty]=self.map[x][y]
-                            self.map[x][y]==self.__recover__(x,y)
+                            self.map[x][y]=self.__recover__(x,y)
                             self.log.logging("correct move!")
                             return (x,y,nextx,nexty)
                         else:
                             self.log.logging("cannot eat or move")
+                            self.showmap()
                             return False
                     else:
                         self.log.logging("uncorrect goes")

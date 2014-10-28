@@ -39,12 +39,12 @@ while True:
                 log.logging("the player %d (name %s) win the game"%(now_player,server.AIname[now_player]),'SHOWALL')
                 break
         else:
-            log.logging("invaild action",'SHOWALL')
+            log.logging("invalid action",'SHOWALL')
             player_limit[now_player]-=1
-            log.logging("the limit of invaild action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
+            log.logging("the limit of invalid action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
     else:
         player_limit[now_player]-=1
-        log.logging("the limit of invaild action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
+        log.logging("the limit of invalid action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
     if player_limit[now_player]==0:
         log.logging("the player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
         break
