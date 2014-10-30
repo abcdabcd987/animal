@@ -37,6 +37,9 @@ class server:
         self.AI[1-first],addr=self.spy.accept()
         self.log.logging("%s connected"%addr[0],'SHOWALL')
 
+        self.AI[0].settimeout(2)
+        self.AI[1].settimeout(2)
+
         self.send(self.AI[0],'0')
         self.AIname[0]=self.recieve(self.AI[0]).strip()
         self.send(self.AI[1],'1')
