@@ -9,9 +9,6 @@ Created on Wed Oct 01 22:43:57 2014
 import network
 import record
 import chess
-import Queue
-import time
-import game
 
 log=record.record()
 server=network.server(log)
@@ -21,10 +18,6 @@ log.logging("Game Begin",'SHOWALL')
 
 now_player=1
 player_limit=[3,3]
-
-command=Queue.Queue()
-thread=game.Game(command)
-thread.start()
 
 steps=0
 while True:
@@ -46,7 +39,6 @@ while True:
         if feedback!=False:
             log.logging("player %d [name %s] choose (%d,%d) move to (%d %d)"%(now_player,server.AIname[now_player],feedback[0],feedback[1],feedback[2],feedback[3]),"SHOWALL")
             server.send(server.AI[0],'%d %d %d %d %d'%(now_player,feedback[0],feedback[1],feedback[2],feedback[3]))
-            command.put(feedback)
             log.logging("Send to player 0 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[0],now_player,feedback[0],feedback[1],feedback[2],feedback[3]))
             server.send(server.AI[1],'%d %d %d %d %d'%(now_player,8-feedback[0],6-feedback[1],8-feedback[2],6-feedback[3]))
             log.logging("Send to player 1 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[1],now_player,8-feedback[0],6-feedback[1],8-feedback[2],6-feedback[3]))
@@ -77,6 +69,5 @@ except Exception, e:
     log.logging("player %d [name: %s] connection closed failed"%(1,server.AIname[1]))
 
 log.logging("total steps : %d"%steps,'SHOWALL')
-command.put("End")
 thread.join()
 
