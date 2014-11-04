@@ -134,7 +134,7 @@ class chess:
         elif animal==7:
             if self.__isAnimal__(a,b):
                 if self.map[a][b][1]!=self.map[x][y][1]:
-                    return (self.map[a][b][0]<=animal or self.__recover__(a,b)==(-3,self.map[x][y][1])) and (self.map[a][b]!=0)
+                    return ((self.map[a][b][0]!=0 and self.map[a][b][0]<=animal) or self.__recover__(a,b)==(-3,self.map[x][y][1])) 
                 else:
                     return False
             else:
