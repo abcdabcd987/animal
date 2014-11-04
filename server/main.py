@@ -69,5 +69,4 @@ except Exception, e:
     log.logging("player %d [name: %s] connection closed failed"%(1,server.AIname[1]))
 
 log.logging("total steps : %d"%steps,'SHOWALL')
-thread.join()
 
