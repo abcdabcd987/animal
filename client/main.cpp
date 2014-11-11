@@ -10,7 +10,7 @@ using network::IO;
 
 #define SERVER_PORT "12345"
 
-#define DEBUG_SINGAL 1
+#define DEBUG_SINGAL 0
 #define DEBUG(x) if(DEBUG_SINGAL)cout<<#x<<" : "<<x<<endl;
 
 vector<pair<int, pair<pair<int ,int>, pair<int, int > > > > step;
@@ -51,7 +51,6 @@ int main(int argc,char **argv)
 			if(message=="action"){
 				string decision="";
 				makeDecision(decision);
-				//this_thread::sleep_for(std::chrono::seconds(1));
 				DEBUG(decision);
 				if(decision==""){
 					client.send("None\n");
@@ -67,6 +66,7 @@ int main(int argc,char **argv)
 				new_x=message[6]-'0';
 				new_y=message[8]-'0';
 				step.push_back(make_pair(id,make_pair(make_pair(x_space,y_space),make_pair(new_x,new_y))));
+				player->addOperators(id,x_space,y_space,new_x,new_y);
 			}
 		}
 	}

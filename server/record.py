@@ -7,13 +7,18 @@ Created on Fri Oct 03 11:24:31 2014
 
 import time
 import json
+import os
 
 class record:
     '''
     record all infomation during the match.
     '''
     def __init__(self):
-        self.file=open("%s.log"%self.__nowTime__(),'w')
+        try:
+            os.mkdir('./record')
+        except Exception, e:
+            pass
+        self.file=open("./record/%s.log"%self.__nowTime__(),'w')
         self.json=open("json.log",'w')
         self.jsonContent={'user':None,'result':None,'step':[],'total':None}
     
