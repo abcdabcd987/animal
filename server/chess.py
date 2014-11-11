@@ -125,6 +125,10 @@ class chess:
                 return False
         if animal==0:
             if self.__isAnimal__(a,b):
+                if self.__recover__(x,y)==-2 and self.__recover__(a,b)==-1:
+                    return False
+                if self.__recover__(x,y)==-1 and self.__recover__(a,b)==-2:
+                    return False
                 if self.map[a][b][1]!=self.map[x][y][1]:
                     return self.map[a][b][0]==0 or self.map[a][b][0]==7 or self.__recover__(a,b)==(-3,self.map[x][y][1])
                 else:

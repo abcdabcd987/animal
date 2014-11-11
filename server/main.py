@@ -30,6 +30,7 @@ while True:
     except socket.timeout:
         log.logging("Recieve message form player %d [name: %s]: TIME EXCEEDED LIMIT"%(now_player,server.AIname[now_player]),'SHOWALL')
         log.logging("the player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
+        log.addJsonNumber('result',1-now_player)
         break
     log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
     if not (message=="None"):        
@@ -42,18 +43,23 @@ while True:
             log.logging("Send to player 0 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[0],now_player,feedback[0],feedback[1],feedback[2],feedback[3]))
             server.send(server.AI[1],'%d %d %d %d %d'%(now_player,8-feedback[0],6-feedback[1],8-feedback[2],6-feedback[3]))
             log.logging("Send to player 1 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[1],now_player,8-feedback[0],6-feedback[1],8-feedback[2],6-feedback[3]))
+            log.addJsonStep(player=now_player,valid=True,source=[feedback[0],feedback[1]],target=[feedback[2],feedback[3]])
             if (feedback[2],feedback[3]) in ((0,3),(8,3)):
                 log.logging("the player %d (name %s) win the game"%(now_player,server.AIname[now_player]),'SHOWALL')
+                log.addJsonNumber('result',now_player)
                 break
         else:
             log.logging("invalid action",'SHOWALL')
             player_limit[now_player]-=1
             log.logging("the limit of invalid action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
+            log.addJsonStep(player=now_player,valid=False)
     else:
         player_limit[now_player]-=1
         log.logging("the limit of invalid action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
+        log.addJsonStep(player=now_player,valid=False)
     if player_limit[now_player]==0:
         log.logging("the player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
+        log.addJsonNumber('result',1-now_player)
         break
         
 try:
@@ -69,5 +75,5 @@ except Exception, e:
     log.logging("player %d [name: %s] connection closed failed"%(1,server.AIname[1]))
 
 log.logging("total steps : %d"%steps,'SHOWALL')
-thread.join()
+log.addJsonNumber('total',steps)
 

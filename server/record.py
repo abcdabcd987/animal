@@ -6,6 +6,7 @@ Created on Fri Oct 03 11:24:31 2014
 """
 
 import time
+import json
 
 class record:
     '''
@@ -13,6 +14,8 @@ class record:
     '''
     def __init__(self):
         self.file=open("%s.log"%self.__nowTime__(),'w')
+        self.json=open("json.log",'w')
+        self.jsonContent={'user':None,'result':None,'step':[],'total':None}
     
     def __nowTime__(self):
         temp=time.asctime().split()
@@ -23,7 +26,19 @@ class record:
         self.file.flush()
         if mode!="FILE":
             print message
-            
+
+    def addJsonUser(self,usr1,usr2):
+        self.jsonContent['user']=[usr1,usr2]
+
+    def addJsonStep(self,**kwargs):
+        self.jsonContent['step'].append(kwargs)
+
+    def addJsonNumber(self,name,content):
+        self.jsonContent[name]=content
+
     def __del__(self):
         print "log closed"
+        self.json.write(json.dumps(self.jsonContent))
+        self.json.flush()
+        self.json.close()
         self.file.close()

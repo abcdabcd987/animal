@@ -18,10 +18,10 @@ class server:
         port=12345
         self.log=log
         self.spy=socket.socket()
-        self.spy.bind((host,port))
+        self.spy.bind(('0.0.0.0',port))
         self.spy.listen(2)        
         
-        self.log.logging("wating to connect ...",'SHOWALL')
+        self.log.logging("waiting to connect ...",'SHOWALL')
         self.log.logging("The PC's host is %s"%host,'SHOWALL')
         
         self.AI=[None,None]
@@ -46,6 +46,8 @@ class server:
         self.AIname[1]=self.recieve(self.AI[1]).strip()
         self.log.logging("%s is the first player"%self.AIname[0],'SHOWALL')
         self.log.logging("%s is the second player"%self.AIname[1],'SHOWALL')
+
+        self.log.addJsonUser(self.AIname[0],self.AIname[1])
         
         
     def send(self,client,message):
