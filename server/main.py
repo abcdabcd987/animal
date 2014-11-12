@@ -1,3 +1,4 @@
+#!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 """
 Created on Wed Oct 01 22:43:57 2014
@@ -16,7 +17,7 @@ board=chess.chess(log)
 
 log.logging("Game Begin",'SHOWALL')
 
-now_player=1
+now_player=1-server.first_player
 player_limit=[3,3]
 
 steps=0
