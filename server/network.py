@@ -31,24 +31,24 @@ class server:
         first=0
         if random.random()<0.5:
             first=1
+        self.first_player = first
 
-        self.AI[first],addr=self.spy.accept()
+        self.AI[0],addr=self.spy.accept()
         self.log.logging("%s connected"%addr[0],'SHOWALL')
-        self.AI[1-first],addr=self.spy.accept()
+        self.AI[1],addr=self.spy.accept()
         self.log.logging("%s connected"%addr[0],'SHOWALL')
 
         self.AI[0].settimeout(2)
         self.AI[1].settimeout(2)
 
-        self.send(self.AI[0],'0')
+        self.send(self.AI[0],str(first))
         self.AIname[0]=self.recieve(self.AI[0]).strip()
-        self.send(self.AI[1],'1')
+        self.send(self.AI[1],str(1-first))
         self.AIname[1]=self.recieve(self.AI[1]).strip()
-        self.log.logging("%s is the first player"%self.AIname[0],'SHOWALL')
-        self.log.logging("%s is the second player"%self.AIname[1],'SHOWALL')
+        self.log.logging("%s is the first player"%self.AIname[first],'SHOWALL')
+        self.log.logging("%s is the second player"%self.AIname[1-first],'SHOWALL')
 
         self.log.addJsonUser(self.AIname[0],self.AIname[1])
-        
         
     def send(self,client,message):
         client.send('%s\n'%message)
