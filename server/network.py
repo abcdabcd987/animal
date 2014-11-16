@@ -18,7 +18,7 @@ class server:
         port=12345
         self.log=log
         self.spy=socket.socket()
-        self.spy.bind(('0.0.0.0',port))
+        self.spy.bind((str(host),port))
         self.spy.listen(2)        
         
         self.log.logging("waiting to connect ...",'SHOWALL')
@@ -55,7 +55,7 @@ class server:
         
     def recieve(self,client):
         res=''
-        while True:        
+        for i in xrange(100):        
             ch=client.recv(1)
             res+=ch
             if ch=='\n':
