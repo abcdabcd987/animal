@@ -41,9 +41,9 @@ while True:
         break
 
     # Receive Message
-    log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
     try:
         message=server.recieve(server.AI[now_player])
+        log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
     except socket.timeout:
         log.logging("Recieve message form player %d [name: %s]: TIME EXCEEDED LIMIT"%(now_player,server.AIname[now_player]),'SHOWALL')
         log.logging("the player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
