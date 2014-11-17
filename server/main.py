@@ -7,6 +7,7 @@ Created on Wed Oct 01 22:43:57 2014
 @email: judaplus@sjtu.edu.cn
 """
 
+import socket
 import network
 import record
 import chess
@@ -22,22 +23,41 @@ player_limit=[3,3]
 
 steps=0
 while True:
+    # Step Limit
+    if steps == 5000:
+        log.logging('Draw!','SHOWALL')
+        log.addJsonNumber('result',2)
+        break
+
+    # Send Message
     steps+=1
     now_player=1-now_player;
-    server.send(server.AI[now_player],'action')
     log.logging("Send to player %d [name: %s] a signal: ACTION"%(now_player,server.AIname[now_player]))
     try:
+        server.send(server.AI[now_player],'action')
+    except:
+        log.logging('Send to player fail')
+        log.addJsonNumber('result',1-now_player)
+        break
+
+    # Receive Message
+    try:
         message=server.recieve(server.AI[now_player])
+        log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
     except socket.timeout:
         log.logging("Recieve message form player %d [name: %s]: TIME EXCEEDED LIMIT"%(now_player,server.AIname[now_player]),'SHOWALL')
         log.logging("the player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
         log.addJsonNumber('result',1-now_player)
         break
-    log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
+
+    # Process Message
     if not (message=="None"):        
         message=chess.transMessage(now_player,message)
-        log.logging("transform message form [number: %d] [name: %s]: %s"%(now_player,server.AIname[now_player],message))
-        feedback=board.check(now_player,message)
+        if message:
+            log.logging("transform message form [number: %d] [name: %s]: %s"%(now_player,server.AIname[now_player],message))
+            feedback=board.check(now_player,message)
+        else:
+            feedback = False
         if feedback!=False:
             log.logging("player %d [name %s] choose (%d,%d) move to (%d %d)"%(now_player,server.AIname[now_player],feedback[0],feedback[1],feedback[2],feedback[3]),"SHOWALL")
             server.send(server.AI[0],'%d %d %d %d %d'%(now_player,feedback[0],feedback[1],feedback[2],feedback[3]))

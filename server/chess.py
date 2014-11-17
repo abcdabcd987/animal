@@ -200,18 +200,22 @@ class chess:
             return False
         
 def transMessage(player,message):
-    if player==0:
-        return message
-    else:
-        info=message.split()
-        info[0]=str(8-int(info[0]))
-        info[1]=str(6-int(info[1]))
-        if info[2]=='U':
-            info[2]='D'
-        elif info[2]=='D':
-            info[2]='U'
-        elif info[2]=='L':
-            info[2]='R'
+    try:
+        if player==0:
+            return message
         else:
-            info[2]='L'
-        return ' '.join(info)
+            info=message.split()
+            info[0]=str(8-int(info[0]))
+            info[1]=str(6-int(info[1]))
+            if info[2]=='U':
+                info[2]='D'
+            elif info[2]=='D':
+                info[2]='U'
+            elif info[2]=='L':
+                info[2]='R'
+            else:
+                info[2]='L'
+            return ' '.join(info)
+    except:
+        self.log.logging('transMessage fail. Player: ' + str(player) + ', message: ' + str(message))
+        return False
