@@ -5,6 +5,7 @@ Created on Thu Oct 02 16:19:21 2014
 @author: Juda
 """
 
+import sys
 import socket
 import record
 import random
@@ -14,7 +15,10 @@ class server:
     network communication by using socket
     '''
     def __init__(self,log):
-        host=socket.gethostbyname(socket.gethostname())
+        if len(sys.argv) > 0 and sys.argv[1] == 'p2dv':
+            host = '127.0.0.1'
+        else:
+            host=socket.gethostbyname(socket.gethostname())
         port=12345
         self.log=log
         self.spy=socket.socket()

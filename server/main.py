@@ -22,6 +22,11 @@ player_limit=[3,3]
 
 steps=0
 while True:
+    if step == 5000:
+        log.logging('Draw!','SHOWALL')
+        log.addJsonNumber('result',2)
+    break
+
     steps+=1
     now_player=1-now_player;
     server.send(server.AI[now_player],'action')
