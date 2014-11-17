@@ -32,10 +32,16 @@ while True:
     # Send Message
     steps+=1
     now_player=1-now_player;
-    server.send(server.AI[now_player],'action')
     log.logging("Send to player %d [name: %s] a signal: ACTION"%(now_player,server.AIname[now_player]))
+    try:
+        server.send(server.AI[now_player],'action')
+    except:
+        log.logging('Send to player fail')
+        log.addJsonNumber('result',1-now_player)
+        break
 
     # Receive Message
+    log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
     try:
         message=server.recieve(server.AI[now_player])
     except socket.timeout:
@@ -43,7 +49,6 @@ while True:
         log.logging("the player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
         log.addJsonNumber('result',1-now_player)
         break
-    log.logging("Recieve message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
 
     # Process Message
     if not (message=="None"):        
