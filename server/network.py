@@ -15,7 +15,7 @@ class server:
     network communication by using socket
     '''
     def __init__(self,log):
-        if len(sys.argv) > 0 and sys.argv[1] == 'p2dv':
+        if len(sys.argv) >= 2 and sys.argv[1] == 'p2dv':
             host = '127.0.0.1'
         else:
             host=socket.gethostbyname(socket.gethostname())
