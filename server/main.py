@@ -7,6 +7,7 @@ Created on Wed Oct 01 22:43:57 2014
 @email: judaplus@sjtu.edu.cn
 """
 
+import socket
 import network
 import record
 import chess
