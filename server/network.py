@@ -69,3 +69,4 @@ class server:
     def __del__(self):
         self.AI[0].close()
         self.AI[1].close()
+        self.spy.close()
