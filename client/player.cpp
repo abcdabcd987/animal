@@ -6,7 +6,7 @@ string Player::name() const {
 	//decide your name
 }
 
-pair<pair<int, int>, char> Player::makeDecision() const {
+pair<pair<int, int>, char> Player::makeDecision() {
 	//your code
 }
 

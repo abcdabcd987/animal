@@ -42,7 +42,6 @@ class record:
         self.jsonContent[name]=content
 
     def __del__(self):
-        print "log closed"
         self.json.write(json.dumps(self.jsonContent))
         self.json.flush()
         self.json.close()

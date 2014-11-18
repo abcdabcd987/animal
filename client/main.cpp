@@ -8,8 +8,6 @@
 using namespace std;
 using network::IO;
 
-#define SERVER_PORT "12345"
-
 #define DEBUG_SINGAL 0
 #define DEBUG(x) if(DEBUG_SINGAL)cout<<#x<<" : "<<x<<endl;
 
@@ -30,11 +28,11 @@ void makeDecision(string& decision){
 
 int main(int argc,char **argv)
 {
-	if(argc!=2){
-		cerr<<"<usage>: client ip"<<endl;
+	if(argc!=3){
+		cerr<<"<usage>: client ip port"<<endl;
 		return 1;
 	}
-	IO client(argv[1],SERVER_PORT);
+	IO client(argv[1],argv[2]);
 	string message;
 	int x_space,y_space,id,new_x,new_y;
 	
