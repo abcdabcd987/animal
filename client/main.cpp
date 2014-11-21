@@ -28,11 +28,12 @@ void makeDecision(string& decision){
 
 int main(int argc,char **argv)
 {
-	if(argc!=3){
-		cerr<<"<usage>: client ip port"<<endl;
+	if(argc!=3 && argc!=2){
+		cerr<<"<usage>: client ip [port]"<<endl;
 		return 1;
 	}
-	IO client(argv[1],argv[2]);
+	string port = argc == 3 ? argv[2] : "12345";
+	IO client(argv[1],port.c_str());
 	string message;
 	int x_space,y_space,id,new_x,new_y;
 	

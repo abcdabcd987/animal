@@ -41,8 +41,9 @@ class record:
     def addJsonNumber(self,name,content):
         self.jsonContent[name]=content
 
-    def __del__(self):
+    def writeFiles(self):
         self.json.write(json.dumps(self.jsonContent))
         self.json.flush()
         self.json.close()
         self.file.close()
+
