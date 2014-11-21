@@ -219,3 +219,4 @@ def transMessage(player,message):
     except:
         self.log.logging('    transMessage fail. Player: ' + str(player) + ', message: ' + str(message))
         return False
+
