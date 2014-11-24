@@ -42,7 +42,7 @@ def main():
             # Process Message
             feedback = False
             if not (message=="None"):
-                message=chess.transMessage(now_player,message)
+                message=board.transMessage(now_player,message)
                 if message:
                     log.logging("    Transform message form [number: %d] [name: %s]: %s"%(now_player,server.AIname[now_player],message))
                     feedback=board.check(now_player,message)
