@@ -40,30 +40,29 @@ def main():
             log.logging("    Receive message form player %d [name: %s]: %s"%(now_player,server.AIname[now_player],message))
 
             # Process Message
-            feedback = False
+            feedback = (False, '', '')
             if not (message=="None"):
-                message=board.transMessage(now_player,message)
-                if message:
+                feedback = board.transMessage(now_player,message)
+                message = feedback[1]
+                if feedback[0]:
                     log.logging("    Transform message form [number: %d] [name: %s]: %s"%(now_player,server.AIname[now_player],message))
-                    feedback=board.check(now_player,message)
-                else:
-                    feedback = False
-                if feedback!=False:
-                    log.logging("    Player %d [name %s] choose (%d,%d) move to (%d %d)"%(now_player,server.AIname[now_player],feedback[0],feedback[1],feedback[2],feedback[3]),"SHOWALL")
-                    server.send(0,'%d %d %d %d %d'%(now_player,feedback[0],feedback[1],feedback[2],feedback[3]))
-                    log.logging("    Send to player 0 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[0],now_player,feedback[0],feedback[1],feedback[2],feedback[3]))
-                    server.send(1,'%d %d %d %d %d'%(now_player,8-feedback[0],6-feedback[1],8-feedback[2],6-feedback[3]))
-                    log.logging("    Send to player 1 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[1],now_player,8-feedback[0],6-feedback[1],8-feedback[2],6-feedback[3]))
-                    log.addJsonStep(player=now_player,valid=True,source=[feedback[0],feedback[1]],target=[feedback[2],feedback[3]])
-                    if (feedback[2],feedback[3]) in ((0,3),(8,3)):
+                    feedback = board.check(now_player,message) 
+                if feedback[0]:
+                    log.logging("    Player %d [name %s] choose (%d,%d) move to (%d %d)"%(now_player,server.AIname[now_player],feedback[1],feedback[2],feedback[3],feedback[4]),"SHOWALL")
+                    server.send(0,'%d %d %d %d %d'%(now_player,feedback[1],feedback[2],feedback[3],feedback[4]))
+                    log.logging("    Send to player 0 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[0],now_player,feedback[1],feedback[2],feedback[3],feedback[4]))
+                    server.send(1,'%d %d %d %d %d'%(now_player,8-feedback[1],6-feedback[2],8-feedback[3],6-feedback[4]))
+                    log.logging("    Send to player 1 [name: %s] infomation : (%d %d %d %d %d)"%(server.AIname[1],now_player,8-feedback[1],6-feedback[2],8-feedback[3],6-feedback[4]))
+                    log.addJsonStep(player=now_player,valid=True,source=[feedback[1],feedback[2]],target=[feedback[3],feedback[4]])
+                    if (feedback[3],feedback[4]) in ((0,3),(8,3)):
                         log.logging("    The Player %d (name %s) win the game"%(now_player,server.AIname[now_player]),'SHOWALL')
                         log.addJsonNumber('result',now_player)
                         break
 
-            if not feedback:
+            if not feedback[0]:
                 player_limit[now_player]-=1
                 log.logging("    The limit of invalid action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
-                log.addJsonStep(player=now_player,valid=False)
+                log.addJsonStep(player=now_player,valid=False,message='%s: %s'%(feedback[1], feedback[2]))
             if player_limit[now_player]==0:
                 log.logging("    The Player %d (name %s) win the game"%(1-now_player,server.AIname[1-now_player]),'SHOWALL')
                 log.addJsonNumber('result',1-now_player)
