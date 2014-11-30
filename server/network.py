@@ -12,7 +12,15 @@ import record
 import random
 import thread
 import time
-import select
+
+def convertToUTF8(line):
+    try:
+        return unicode(line, 'utf-8').encode('utf-8')
+    except:
+        try:
+            return unicode(line, 'gbk').encode('utf-8')
+        except:
+            return "[Unknown Encoding]"
 
 class server:
     '''
@@ -35,12 +43,13 @@ class server:
         # Find a unused port
         while True:
             try:
+                self.spy=socket.socket()
                 if self.p2dv:
                     port = random.randint(1024,65535)
+                    self.spy.bind((str(host),port))
                 else:
                     port = 12345
-                self.spy=socket.socket()
-                self.spy.bind((str(host),port))
+                    self.spy.bind(('0.0.0.0',port))
                 self.spy.listen(2)
                 self.port = port
                 if self.p2dv:
@@ -49,10 +58,12 @@ class server:
             except:
                 self.log.logging('    Port %d is used. Trying another.' % (port), 'SHOWALL')
                 if not self.p2dv:
-                    os.sleep(0.5)
+                    time.sleep(0.5)
         
         self.log.logging("    Waiting to connect ...",'SHOWALL')
         self.log.logging("    The PC's host is %s, the port is %d"%(host,port),'SHOWALL')
+        if not self.p2dv:
+            self.log.logging("    You can also connect to localhost, port 12345", 'SHOWALL')
         
         # Determine which player is first player  
         first = 0 if random.random()<0.5 else 1
@@ -110,7 +121,7 @@ class server:
     def receive(self,clientID,fbvalue=None):
         try:
             res = self.AI[clientID].recv(128)
-            return res.strip()
+            return convertToUTF8(res.strip())
         except:
             if not fbvalue:
                 self.log.logging('    Receive message from AI%d timeout. AI%d wins.'%(clientID, 1-clientID), 'SHOWALL')

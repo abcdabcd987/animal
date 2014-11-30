@@ -181,28 +181,27 @@ class chess:
                             self.map[nextx][nexty]=self.map[x][y]
                             self.map[x][y]=self.__recover__(x,y)
                             self.log.logging("    Correct move!")
-                            return (x,y,nextx,nexty)
+                            return (True, x,y,nextx,nexty)
                         else:
                             self.log.logging("    cannot eat or move")
-                            self.showmap()
-                            return False
+                            return (False, "Cannot eat or cannot move", str(info))
                     else:
                         self.log.logging("    uncorrect goes")
-                        return False
+                        return (False, "Trying to move out of boundary", str(info))
                 else:
                     self.log.logging("    try to use uncorrect role")
-                    return False
+                    return (False, "Invalid chess piece", str(info))
             else:
                 self.log.logging("    uncorrect infomation")
-                return False
+                return (False, "Out of boundary / Invalid direction", str(info))
         except:
             self.log.logging("    unknown error")
-            return False
+            return (False, "Invalid data", str(info))
 
     def transMessage(self,player,message):
         try:
             if player==0:
-                return message
+                return (True, message)
             else:
                 info=message.split()
                 info[0]=str(8-int(info[0]))
@@ -215,8 +214,8 @@ class chess:
                     info[2]='R'
                 else:
                     info[2]='L'
-                return ' '.join(info)
+                return (True, ' '.join(info))
         except:
-            self.log.logging('    transMessage fail. Player: ' + str(player) + ', message: ' + str(message))
-            return False
+            self.log.logging('    transMessage fail. Player: ' + str(player) + ', message: ' + str(message), 'SHOWALL')
+            return (False, 'Invalid data', message)
 
