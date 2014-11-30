@@ -43,12 +43,13 @@ class server:
         # Find a unused port
         while True:
             try:
+                self.spy=socket.socket()
                 if self.p2dv:
                     port = random.randint(1024,65535)
+                    self.spy.bind((str(host),port))
                 else:
                     port = 12345
-                self.spy=socket.socket()
-                self.spy.bind((str(host),port))
+                    self.spy.bind(('0.0.0.0',port))
                 self.spy.listen(2)
                 self.port = port
                 if self.p2dv:
@@ -61,6 +62,8 @@ class server:
         
         self.log.logging("    Waiting to connect ...",'SHOWALL')
         self.log.logging("    The PC's host is %s, the port is %d"%(host,port),'SHOWALL')
+        if not self.p2dv:
+            self.log.logging("    You can also connect to localhost, port 12345", 'SHOWALL')
         
         # Determine which player is first player  
         first = 0 if random.random()<0.5 else 1

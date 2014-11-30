@@ -61,6 +61,7 @@ def main():
 
             if not feedback[0]:
                 player_limit[now_player]-=1
+                log.logging('    %s: %s'%(feedback[1], feedback[2]), 'SHOWALL')
                 log.logging("    The limit of invalid action of player %d (name %s) is %d"%(now_player,server.AIname[now_player],player_limit[now_player]),'SHOWALL')
                 log.addJsonStep(player=now_player,valid=False,message='%s: %s'%(feedback[1], feedback[2]))
             if player_limit[now_player]==0:

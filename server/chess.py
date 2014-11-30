@@ -180,22 +180,22 @@ class chess:
                         if self.__eat__(animal_type,x,y,nextx,nexty):
                             self.map[nextx][nexty]=self.map[x][y]
                             self.map[x][y]=self.__recover__(x,y)
-                            self.log.logging("    Correct move!", 'SHOWALL')
+                            self.log.logging("    Correct move!")
                             return (True, x,y,nextx,nexty)
                         else:
-                            self.log.logging("    cannot eat or move", 'SHOWALL')
+                            self.log.logging("    cannot eat or move")
                             return (False, "Cannot eat or cannot move", str(info))
                     else:
-                        self.log.logging("    uncorrect goes", 'SHOWALL')
+                        self.log.logging("    uncorrect goes")
                         return (False, "Trying to move out of boundary", str(info))
                 else:
-                    self.log.logging("    try to use uncorrect role", 'SHOWALL')
+                    self.log.logging("    try to use uncorrect role")
                     return (False, "Invalid chess piece", str(info))
             else:
-                self.log.logging("    uncorrect infomation", 'SHOWALL')
+                self.log.logging("    uncorrect infomation")
                 return (False, "Out of boundary / Invalid direction", str(info))
         except:
-            self.log.logging("    unknown error", 'SHOWALL')
+            self.log.logging("    unknown error")
             return (False, "Invalid data", str(info))
 
     def transMessage(self,player,message):
