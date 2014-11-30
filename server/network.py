@@ -12,7 +12,15 @@ import record
 import random
 import thread
 import time
-import select
+
+def convertToUTF8(line):
+    try:
+        return unicode(line, 'utf-8').encode('utf-8')
+    except:
+        try:
+            return unicode(line, 'gbk').encode('utf-8')
+        except:
+            return "[Unknown Encoding]"
 
 class server:
     '''
@@ -49,7 +57,7 @@ class server:
             except:
                 self.log.logging('    Port %d is used. Trying another.' % (port), 'SHOWALL')
                 if not self.p2dv:
-                    os.sleep(0.5)
+                    time.sleep(0.5)
         
         self.log.logging("    Waiting to connect ...",'SHOWALL')
         self.log.logging("    The PC's host is %s, the port is %d"%(host,port),'SHOWALL')
@@ -110,7 +118,7 @@ class server:
     def receive(self,clientID,fbvalue=None):
         try:
             res = self.AI[clientID].recv(128)
-            return res.strip()
+            return convertToUTF8(res.strip())
         except:
             if not fbvalue:
                 self.log.logging('    Receive message from AI%d timeout. AI%d wins.'%(clientID, 1-clientID), 'SHOWALL')

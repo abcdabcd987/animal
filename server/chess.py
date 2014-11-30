@@ -180,22 +180,22 @@ class chess:
                         if self.__eat__(animal_type,x,y,nextx,nexty):
                             self.map[nextx][nexty]=self.map[x][y]
                             self.map[x][y]=self.__recover__(x,y)
-                            self.log.logging("    Correct move!")
+                            self.log.logging("    Correct move!", 'SHOWALL')
                             return (True, x,y,nextx,nexty)
                         else:
-                            self.log.logging("    cannot eat or move")
+                            self.log.logging("    cannot eat or move", 'SHOWALL')
                             return (False, "Cannot eat or cannot move", str(info))
                     else:
-                        self.log.logging("    uncorrect goes")
+                        self.log.logging("    uncorrect goes", 'SHOWALL')
                         return (False, "Trying to move out of boundary", str(info))
                 else:
-                    self.log.logging("    try to use uncorrect role")
+                    self.log.logging("    try to use uncorrect role", 'SHOWALL')
                     return (False, "Invalid chess piece", str(info))
             else:
-                self.log.logging("    uncorrect infomation")
+                self.log.logging("    uncorrect infomation", 'SHOWALL')
                 return (False, "Out of boundary / Invalid direction", str(info))
         except:
-            self.log.logging("    unknown error")
+            self.log.logging("    unknown error", 'SHOWALL')
             return (False, "Invalid data", str(info))
 
     def transMessage(self,player,message):
@@ -216,6 +216,6 @@ class chess:
                     info[2]='L'
                 return (True, ' '.join(info))
         except:
-            self.log.logging('    transMessage fail. Player: ' + str(player) + ', message: ' + str(message))
+            self.log.logging('    transMessage fail. Player: ' + str(player) + ', message: ' + str(message), 'SHOWALL')
             return (False, 'Invalid data', message)
 
