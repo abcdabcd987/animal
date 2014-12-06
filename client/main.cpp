@@ -18,9 +18,9 @@ Player *player;
 
 void makeDecision(string& decision){
 	pair<pair<int, int>, char> res=player->makeDecision();
-	decision=to_string(res.first.first);
+	decision='0' + res.first.first;
 	decision+=' ';
-	decision+=to_string(res.first.second);
+	decision+='0' + res.first.second;
 	decision+=' ';
 	decision+=res.second;
 	decision+='\n';
