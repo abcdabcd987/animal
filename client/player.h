@@ -9,7 +9,7 @@ using namespace std;
 
 
 /**
-*@para my_id 0 present that your are the first player, while 1 present that your are the second player.
+*@para my_id your ID, either 0 or 1.
 *@para operators all operators that 2 players had done. each element is in the format of <id, < <x,y> ,<move to x, move to y> > >
 *@para operators_tuple the same as operators
 **/

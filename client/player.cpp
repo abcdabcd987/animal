@@ -1,6 +1,6 @@
 #include "player.h"
-#include "tuple"
-#include "vector"
+#include <tuple>
+#include <vector>
 
 string Player::name() const {
 	//decide your name
