@@ -78,7 +78,7 @@ class server:
         try:
             self.AI[clientID],addr=self.spy.accept()
             self.AI[clientID].settimeout(2)
-            self.send(clientID,str(first))
+            self.send(clientID,clientID)
             self.AIname[clientID]=self.receive(clientID, '[Unknown]')
             self.log.logging("    AI%d: %s from %s connected"%(clientID,self.AIname[clientID],addr[0]),'SHOWALL')
         except:
