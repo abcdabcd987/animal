@@ -55,6 +55,11 @@ class chess:
             b+=1
         return (a,b)
         
+    def __caveCheck__(self, x, y, side):
+        if (x, y) in ((0, 3), (8, 3)):
+            return (side == 0 and (x, y) == (8, 3)) or (side == 1 and (x, y) == (0, 3))
+        return True
+
     def __isBoundary__(self,x,y):
         return x>=0 and x<9 and y>=0 and y<7
 
@@ -177,14 +182,18 @@ class chess:
                     animal_type=self.map[x][y][0]
                     nextx,nexty=self.__gone__(animal_type,x,y,diretion)
                     if self.__isBoundary__(nextx,nexty):
-                        if self.__eat__(animal_type,x,y,nextx,nexty):
-                            self.map[nextx][nexty]=self.map[x][y]
-                            self.map[x][y]=self.__recover__(x,y)
-                            self.log.logging("    Correct move!")
-                            return (True, x,y,nextx,nexty)
+                        if self.__caveCheck__(nextx, nexty, player):
+                            if self.__eat__(animal_type,x,y,nextx,nexty):
+                                self.map[nextx][nexty]=self.map[x][y]
+                                self.map[x][y]=self.__recover__(x,y)
+                                self.log.logging("    Correct move!")
+                                return (True, x,y,nextx,nexty)
+                            else:
+                                self.log.logging("    cannot eat or move")
+                                return (False, "Cannot eat or cannot move", str(info))
                         else:
-                            self.log.logging("    cannot eat or move")
-                            return (False, "Cannot eat or cannot move", str(info))
+                            self.log.logging("    cannot move to your cave")
+                            return (False, "Cannot move to your cave", str(info))
                     else:
                         self.log.logging("    uncorrect goes")
                         return (False, "Trying to move out of boundary", str(info))
